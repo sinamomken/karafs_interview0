@@ -36,16 +36,6 @@ class MainActivity : AppCompatActivity() {
         printArray(outArray, processed_tv)
     }
 
-    fun createInArray(n: Int) : Array<IntArray> {
-        val outArray = Array(n){IntArray(n)}
-        for (i:Int in 0..(n-1)){
-            for (j:Int in 0..(n-1)){
-                outArray[i][j] = i*n+j
-            }
-        }
-        return outArray
-    }
-
     fun printArray(a: Array<IntArray>, tv:TextView){
         var rowStr : String = " \n"
         for(i:Int in 0..a.size-1){
@@ -58,22 +48,34 @@ class MainActivity : AppCompatActivity() {
         tv.text = rowStr
     }
 
-    fun calculateOutArray(inArr: Array<IntArray>) : Array<IntArray>{
-        val n:Int = inArr.size
-        val outArr = Array(2*n-1){IntArray(n){0} }
-
-        for(k:Int in 0..n-1){
-            var i:Int = k
-            for(j:Int in k..n-1){
-                outArr[i-j + n-1][k] = inArr[i][j]
+    companion object {
+        fun createInArray(n: Int): Array<IntArray> {
+            val outArray = Array(n) { IntArray(n) }
+            for (i: Int in 0..(n - 1)) {
+                for (j: Int in 0..(n - 1)) {
+                    outArray[i][j] = i * n + j
+                }
             }
-
-            var j:Int = k
-            for(i:Int in k..n-1){
-                outArr[i-j + n-1][k] = inArr[i][j]
-            }
+            return outArray
         }
 
-        return outArr
+        fun calculateOutArray(inArr: Array<IntArray>): Array<IntArray> {
+            val n: Int = inArr.size
+            val outArr = Array(2 * n - 1) { IntArray(n) { 0 } }
+
+            for (k: Int in 0..n - 1) {
+                var i: Int = k
+                for (j: Int in k..n - 1) {
+                    outArr[i - j + n - 1][k] = inArr[i][j]
+                }
+
+                var j: Int = k
+                for (i: Int in k..n - 1) {
+                    outArr[i - j + n - 1][k] = inArr[i][j]
+                }
+            }
+
+            return outArr
+        }
     }
 }
